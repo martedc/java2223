@@ -23,20 +23,21 @@ public class Patterns {
 		int i = 1;
 
 		do {
-			
+
 			if (i < num) {
 				System.out.print(" ".repeat(num - i) + "*".repeat((i * 2) - 1) + " ".repeat(num - i) + "\n");
 			}
-			
+
 			if (i == num) {
 				System.out.print("*".repeat((num * 2) - 1) + "\n");
 			}
-			
+
 			if (i > num) {
-				System.out.print(" ".repeat(-num + i) + "*".repeat((num - (-num + i))*2 - 1) + " ".repeat(-num + i) + "\n");
+				System.out.print(
+						" ".repeat(-num + i) + "*".repeat((num - (-num + i)) * 2 - 1) + " ".repeat(-num + i) + "\n");
 			}
 			i++;
-		} while (i < num*2);
+		} while (i < num * 2);
 	}
 
 	public static void main(String[] args) {
