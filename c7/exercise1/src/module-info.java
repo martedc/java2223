@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author marte
+ * @author Marten
  *
  */
 module exercise1 {

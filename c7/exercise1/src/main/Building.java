@@ -15,10 +15,10 @@ public class Building {
 		this.setAddress("Unknown");
 	}
 
-	public void setSpace(int space) throws IlligalArgumentException {
-		tempSpace = space;
+	public void setSpace(int space) {
+		int tempSpace = space;
 		if (space <= 0) {
-			throw new IlligalArgumentException(space)
+			throw new ArithmeticException("The space cannot be negative!");
 		}
 		this.availableSpace = tempSpace;
 	}
@@ -28,25 +28,27 @@ public class Building {
 	}
 	
 	public void setAddress(String address) {
-		this.address = address
+		this.address = address;
 	}
 	
 	public String getAddress() {
-		return this.availableSpace;
+		return this.address;
 	}
 	
 	public String toString() {
 		if (address != "Unknown") {
-			System.out.println("This is a building with " + this.getSpace() + " square meters of floor space, located at " + this.getAddress() + ".");
+			return "This is a building with " + this.getSpace() + " square meters of floor space, located at " + this.getAddress() + ".";
 		}
-		System.out.println("This is a building with " + this.getSpace() + " square meters of floor space, the address is unknown.");
+		return "This is a building with " + this.getSpace() + " square meters of floor space, the address is unknown.";
 	}
 	
-	public void main(String[] args) {
-		Building myBuilding = new Building(82,"Vaartstraat 9, 3000 Leuven");
-		Building myUnknownBuilding new Buildling(54);
-		myBuildling.toString();
-		myUnkownBuildling.toString();
+	public static void main(String[] args) {
+		Building myBuilding = new Building(25,"Vaartstraat 9, 3000 Leuven");
+		Building myUnknownBuilding = new Building(54);
+		Building myIlligalBuilding = new Building(0, "Legestraat, 1412 Sinterklaasdorp");
+		System.out.println(myBuilding.toString());
+		System.out.println(myUnknownBuilding.toString());
+		System.out.println(myIlligalBuilding.toString());
 	}
 	
 }
