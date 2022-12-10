@@ -6,7 +6,7 @@ public class Genome {
 	private String identifier;
 	private String sequence;
 	
-	// constructor class: identifier and genome sequence as strings
+	// constructor method: identifier and genome sequence as strings
 	public Genome(String identifier, String sequence) {
 		this.setIdentifier(identifier);
 		this.setSequence(sequence);
@@ -27,6 +27,11 @@ public class Genome {
 
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
+	}
+	
+	public void printGenome() {
+		System.out.println(identifier);
+		System.out.println(sequence);
 	}
 	
 	@Override

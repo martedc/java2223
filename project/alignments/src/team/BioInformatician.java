@@ -6,7 +6,7 @@ public class BioInformatician extends Employee {
 	
 	private Alignment alignment;
 
-	// constructor class, Bioinformatician is a subclass of Employee
+	// constructor method, Bioinformatician is a subclass of Employee
 	public BioInformatician(String firstName, String lastName, int experience, Alignment alignment) {
 		super("Bioinformatician",firstName,lastName,experience);
 		this.setAlignment(alignment);

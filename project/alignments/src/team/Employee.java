@@ -8,7 +8,7 @@ public abstract class Employee {
 	private String lastName;
 	private int experience;
 
-	// constructor class: function, first name, last name and years of experience
+	// constructor method: function, first name, last name and years of experience
 	public Employee(String function, String firstName, String lastName, int experience) {
 		this.setFunction(function);
 		this.setFirstName(firstName);

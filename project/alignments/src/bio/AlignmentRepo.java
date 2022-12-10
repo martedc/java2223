@@ -4,6 +4,7 @@ public class AlignmentRepo {
 	
 	private Alignment alignment;
 
+	// constructor method
 	public AlignmentRepo(Alignment alignment) {
 		this.setStartingAlignment(alignment);
 	}
