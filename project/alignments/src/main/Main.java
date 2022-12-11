@@ -45,13 +45,13 @@ public class Main {
 	
 		// ((BioInformatician) employeeList.getEmployeeN(1)).replaceGenome(testIdentifier, ">testid", "AABTGTGCCAAG", repo);
 		
-		((BioInformatician) employeeList.getEmployeeN(1)).replaceSequence(testIdentifier, "TTT", "CCC", repo);
-		((BioInformatician) employeeList.getEmployeeN(2)).replaceSequence(testIdentifier, "C", "T", repo);
+		// ((BioInformatician) employeeList.getEmployeeN(1)).replaceSequence(testIdentifier, "TTT", "CCC", repo);
+		// ((BioInformatician) employeeList.getEmployeeN(2)).replaceSequence(testIdentifier, "C", "T", repo);
 		
 		
-		startingAlignment.getStandardAlignment().get(0).printGenome();
-		repo.getRepository().get(1).getStandardAlignment().get(0).printGenome();
-		repo.getRepository().get(2).getStandardAlignment().get(0).printGenome();
+		// startingAlignment.getStandardAlignment().get(0).printGenome();
+		// repo.getRepository().get(1).getStandardAlignment().get(0).printGenome();
+		// repo.getRepository().get(2).getStandardAlignment().get(0).printGenome();
 		
 		scan.close();
 	}

@@ -11,6 +11,11 @@ public class Genome {
 		this.setIdentifier(identifier);
 		this.setSequence(sequence);
 	}
+	
+	public Genome(Genome toCopy) {
+		this.identifier = toCopy.identifier;
+		this.sequence = toCopy.sequence;
+	}
 
 	// getters and setters for variables
 	public String getIdentifier() {

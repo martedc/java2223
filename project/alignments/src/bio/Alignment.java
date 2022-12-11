@@ -18,10 +18,17 @@ public class Alignment {
 	}
 	
 	public Alignment(Alignment toClone) {
-		this.standard = new ArrayList<>(toClone.getStandardAlignment());
-		this.snp = new ArrayList<>(toClone.getSNPAlignment());
-		this.score = toClone.getScore();
+		List<Genome> copyList = new ArrayList<>();
+		Genome myGenome;
 		
+		for (Genome g : toClone.getStandardAlignment()) {
+			myGenome = new Genome(g);
+			copyList.add(myGenome);
+		}
+		
+		this.standard = copyList;
+		this.setSNPAlignment(copyList);
+		this.score = toClone.getScore();
 	}
 
 	// getter and setter methods
