@@ -1,27 +1,28 @@
 package bio;
 
+import java.util.List;
+
 public class AlignmentRepo {
-	
-	private Alignment alignment;
+
+	private List<Alignment> alignmentList;
 
 	// constructor method
-	public AlignmentRepo(Alignment alignment) {
-		this.setStartingAlignment(alignment);
+	public AlignmentRepo(List<Alignment> alignmentList) {
+		this.setRepository(alignmentList);
 	}
 
-	// getter and setter for assignment variable
-	public Alignment getAlignment() {
-		return alignment;
+	// getter and setter for repository
+	public List<Alignment> getRepository() {
+		return alignmentList;
 	}
 
-	public void setStartingAlignment(Alignment alignment) {
-		this.alignment = alignment;
-		System.out.println();
+	public void setRepository(List<Alignment> alignmentList) {
+		this.alignmentList = alignmentList;
 	}
-	
-	// setting new shared alignment
-	public void setAlignment(Alignment alignment) {
-		this.alignment = alignment;	
+
+	public void changeAlignment(int place, Alignment newAlignment) {
+		alignmentList.add(place, newAlignment);
+		alignmentList.remove(place + 1);
 	}
-	
+
 }

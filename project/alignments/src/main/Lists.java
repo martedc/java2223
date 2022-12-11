@@ -27,7 +27,7 @@ public class Lists {
 					myEmployee = new TeamLead(scan.next(), scan.next(), Integer.parseInt(scan.next()));
 					break;
 				case "Bioinformatician":
-					myEmployee = new BioInformatician(scan.next(), scan.next(), Integer.parseInt(scan.next()), null);
+					myEmployee = new BioInformatician(scan.next(), scan.next(), Integer.parseInt(scan.next()), null, 0);
 					break;
 				case "TechnicalSupport":
 					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()));

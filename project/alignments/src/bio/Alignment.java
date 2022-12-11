@@ -1,6 +1,7 @@
 package bio;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Alignment {
 
@@ -14,6 +15,13 @@ public class Alignment {
 		this.setStandardAlignment(std);
 		this.setSNPAlignment(snp);
 		this.setScore(score);
+	}
+	
+	public Alignment(Alignment toClone) {
+		this.standard = new ArrayList<>(toClone.getStandardAlignment());
+		this.snp = new ArrayList<>(toClone.getSNPAlignment());
+		this.score = toClone.getScore();
+		
 	}
 
 	// getter and setter methods
@@ -80,12 +88,22 @@ public class Alignment {
 		this.score = score;
 	}
 	
-	public void findSequence(String s) {
+	public void findSequence(boolean snip, String s) {
 		
-		for (int i = 0; i < standard.size(); i++) {
-			if (standard.get(i).getSequence().indexOf(s) != -1) {
-				standard.get(i).printGenome();
+		if (snip == true) {
+			for (int i = 0; i < snp.size(); i++) {
+				if (snp.get(i).getSequence().indexOf(s) != -1) {
+					snp.get(i).printGenome();
+				}
 			}
+		} else if (snip == false) {
+			for (int i = 0; i < standard.size(); i++) {
+				if (standard.get(i).getSequence().indexOf(s) != -1) {
+					standard.get(i).printGenome();
+				}
+			}
+		} else {
+			System.out.println("Error - Please enter true/false correctly");
 		}
 	}
 	
@@ -110,18 +128,64 @@ public class Alignment {
 			}
 			System.out.println("Error - No genome was found with the input sequence");
 		}
+		this.setSNPAlignment(standard);
 	}
 	
 	public void replaceSequence(String id, String targetSequence, String repSequence) {
 		
 		if (targetSequence.length() != repSequence.length()) {
 			System.out.println("Error - The length of the target and replacement sequences has to match!");
+		} else {
+			if (id.charAt(0) == '>') { 
+				for (int i = 0; i < standard.size(); i++) {
+					if (standard.get(i).getIdentifier().equals(id)) {
+						this.standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+						return;
+					} 
+				}
+				System.out.println("Error - No genome was found with the input identifier");
+			} else {
+				for (int i = 0; i < standard.size(); i++) {
+					if (standard.get(i).getSequence().equals(id)) {
+						this.standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+						return;
+					}
+				}
+				System.out.println("Error - No genome was found with the input sequence");
+			}
+			this.setSNPAlignment(standard);
 		}
+	}
+	
+	public void replaceSequence(String targetSequence, String repSequence) {
+		
+		if (targetSequence.length() != repSequence.length()) {
+			System.out.println("Error - The length of the target and replacement sequences has to match!");
+		} else {
+			for (int i = 0; i < standard.size(); i++) {
+				this.standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+				this.setSNPAlignment(standard);
+			}
+		}
+	}
+	
+	public void addGenome(String identifier, String sequence) {
+		
+		if (identifier.charAt(0) != '>') {
+			System.out.println("Error - An incorrect identifier was given");
+		} else {
+			Genome myGenome = new Genome(identifier, sequence);
+			standard.add(myGenome);
+			this.setSNPAlignment(standard);
+		}
+	}
+	
+	public void removeGenome(String id) {
 		
 		if (id.charAt(0) == '>') { 
 			for (int i = 0; i < standard.size(); i++) {
 				if (standard.get(i).getIdentifier().equals(id)) {
-					standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+					standard.remove(i);
 					return;
 				} 
 			}
@@ -129,17 +193,17 @@ public class Alignment {
 		} else {
 			for (int i = 0; i < standard.size(); i++) {
 				if (standard.get(i).getSequence().equals(id)) {
-					standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+					standard.remove(i);
 					return;
 				}
 			}
 			System.out.println("Error - No genome was found with the input sequence");
 		}
+		this.setSNPAlignment(standard);
 	}
-
+	
 	public static String toString(char[] a) {
 		String string = new String(a);
-
 		return string;
 	}
 

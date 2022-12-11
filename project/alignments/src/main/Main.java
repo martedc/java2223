@@ -1,6 +1,8 @@
 package main;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 import team.*;
 import bio.*;
 
@@ -18,43 +20,38 @@ public class Main {
 
 		// create a list of the employees in the team
 		EmployeeList employeeList = new EmployeeList(lists.createEmployeeList(txtName));
-		employeeList.printEmployees();
+		// employeeList.printEmployees();
 
 		// fetch starting alignment from file
 		Alignment startingAlignment = new Alignment(lists.createGenomeList(fastaName), lists.createGenomeList(fastaName), 0);
 
-		// set starting alignment for Bioinformaticians
+		// initialising starting alignments and repository
+		List<Alignment> startingRepository = new ArrayList<>();
+		startingRepository.add(startingAlignment);
 		for (Employee e : employeeList.getEmployeeList()) {
 			if (e instanceof BioInformatician) {
-				((BioInformatician) e).setAlignment(startingAlignment);
+				Alignment myAlignment = new Alignment(startingAlignment);
+				((BioInformatician) e).setAlignment(myAlignment);
+				startingRepository.add(((BioInformatician) e).getAlignment());
+				((BioInformatician) e).setRepoID(startingRepository.size() - 1);
 			}
 		}
-
-		// setting starting shared alignment
-		AlignmentRepo repo = new AlignmentRepo(startingAlignment); 
-
-		// test: setting new shared alignment
-		((TeamLead) employeeList.getEmployeeN(0)).setRepoAlignment(repo, startingAlignment, (BioInformatician) employeeList.getEmployeeN(2));
-
-		// test: finding AACAAATG in the genomes
-		// startingAlignment.findSequence("AACAAATG");
+		AlignmentRepo repo = new AlignmentRepo(startingRepository);
 		
-		// test: finding >1990.U.CD.90.90CD121E12's sequence and replacing with testId and testSeq
-		/*
-		 * String searchSequence =
-		 * startingAlignment.getStandardAlignment().get(0).getSequence();
-		 * startingAlignment.replaceGenome(searchSequence, "testID", "testSEQ");
-		 * startingAlignment.getStandardAlignment().get(0).printGenome();
-		 */
+		// testing bioinformatician changes
+		String testIdentifier = startingAlignment.getStandardAlignment().get(0).getIdentifier();
 		
-		// test: replace sequence in >1990.U.CD.90.90CD121E12 
-		/*
-		 * String searchSequence =
-		 * startingAlignment.getStandardAlignment().get(0).getSequence();
-		 * startingAlignment.replaceSequence(searchSequence, "T", "CC");
-		 * startingAlignment.getStandardAlignment().get(0).printGenome();
-		 */
-		 
+		// ((BioInformatician) employeeList.getEmployeeN(1)).findSequence(false, "AACAAATG");
+	
+		// ((BioInformatician) employeeList.getEmployeeN(1)).replaceGenome(testIdentifier, ">testid", "AABTGTGCCAAG", repo);
+		
+		((BioInformatician) employeeList.getEmployeeN(1)).replaceSequence(testIdentifier, "TTT", "CCC", repo);
+		((BioInformatician) employeeList.getEmployeeN(2)).replaceSequence(testIdentifier, "C", "T", repo);
+		
+		
+		startingAlignment.getStandardAlignment().get(0).printGenome();
+		repo.getRepository().get(1).getStandardAlignment().get(0).printGenome();
+		repo.getRepository().get(2).getStandardAlignment().get(0).printGenome();
 		
 		scan.close();
 	}
