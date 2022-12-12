@@ -14,20 +14,24 @@ public class Alignment {
 	public Alignment(List<Genome> std, List<Genome> snp, int score) {
 		this.setStandardAlignment(std);
 		this.setSNPAlignment(snp);
-		this.setScore(score);
+		this.setScore();
 	}
 	
 	public Alignment(Alignment toClone) {
-		List<Genome> copyList = new ArrayList<>();
-		Genome myGenome;
+		List<Genome> copyStandardList = new ArrayList<>();
+		List<Genome> copySnpList = new ArrayList<>();
+		Genome myGenome1;
+		Genome myGenome2;
 		
 		for (Genome g : toClone.getStandardAlignment()) {
-			myGenome = new Genome(g);
-			copyList.add(myGenome);
+			myGenome1 = new Genome(g);
+			myGenome2 = new Genome(g);
+			copyStandardList.add(myGenome1);
+			copySnpList.add(myGenome2);
 		}
 		
-		this.standard = copyList;
-		this.setSNPAlignment(copyList);
+		this.standard = copyStandardList;
+		this.setSNPAlignment(copySnpList);
 		this.score = toClone.getScore();
 	}
 
@@ -50,13 +54,20 @@ public class Alignment {
 	 * compared line by line with all the following genomes, if the characters
 	 * correspond they stay unchanged, otherwise they get replaced with a '.'
 	 */
-	public void setSNPAlignment(List<Genome> snp) {
-		char[] refSequence = standard.get(0).getSequence().toCharArray();
+	public void setSNPAlignment(List<Genome> alignment) {
+		char[] refSequence = alignment.get(0).getSequence().toCharArray();
 		char[] newSequence;
+		List<Genome> myAlignment = new ArrayList<>();
+		Genome myGenome;
+		
+		for (Genome g : alignment) {
+			myGenome = new Genome(g);
+			myAlignment.add(myGenome);
+		}
 
 		for (int i = 0; i < standard.size(); i++) {
 			if (i != 0) {
-				newSequence = standard.get(i).getSequence().toCharArray();
+				newSequence = myAlignment.get(i).getSequence().toCharArray().clone();
 			} else {
 				continue;
 			}
@@ -64,10 +75,10 @@ public class Alignment {
 				if (refSequence[j] == newSequence[j]) {
 					newSequence[j] = '.';
 				}
-			}
-			snp.get(i).setSequence(toString(newSequence));
+			}	
+			myAlignment.get(i).setSequence(toString(newSequence));
 		}
-		this.snp = snp;
+		this.snp = myAlignment;
 	}
 
 	public int getScore() {
@@ -76,23 +87,24 @@ public class Alignment {
 
 	// Alignment score setter method: computes score
 	// works by comparing a reference sequence (first genome) with all following genomes, if a character is not the same 1 gets added to the score
-	public void setScore(int score) {
-		char[] refSequence = standard.get(0).getSequence().toCharArray();
+	public void setScore() {
+		char[] refSequence = this.standard.get(0).getSequence().toCharArray();
 		char[] newSequence;
+		int s = 0;
 
 		for (int i = 0; i < standard.size(); i++) {
 			if (i != 0) {
-				newSequence = standard.get(i).getSequence().toCharArray();
+				newSequence = this.standard.get(i).getSequence().toCharArray();
 			} else {
 				continue;
 			}
 			for (int j = 0; j < refSequence.length; j++) {
 				if (refSequence[j] != newSequence[j]) {
-					score++;
+					s++;
 				}
 			}
 		}
-		this.score = score;
+		this.score = s;
 	}
 	
 	public void findSequence(boolean snip, String s) {
@@ -136,6 +148,7 @@ public class Alignment {
 			System.out.println("Error - No genome was found with the input sequence");
 		}
 		this.setSNPAlignment(standard);
+		this.setScore();
 	}
 	
 	public void replaceSequence(String id, String targetSequence, String repSequence) {
@@ -144,23 +157,26 @@ public class Alignment {
 			System.out.println("Error - The length of the target and replacement sequences has to match!");
 		} else {
 			if (id.charAt(0) == '>') { 
-				for (int i = 0; i < standard.size(); i++) {
-					if (standard.get(i).getIdentifier().equals(id)) {
-						this.standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+				for (int i = 0; i < this.standard.size(); i++) {
+					if (this.standard.get(i).getIdentifier().equals(id)) {
+						this.standard.get(i).setSequence(this.standard.get(i).getSequence().replace(targetSequence, repSequence));
+						this.setSNPAlignment(this.standard);
+						this.setScore();
 						return;
 					} 
 				}
 				System.out.println("Error - No genome was found with the input identifier");
 			} else {
-				for (int i = 0; i < standard.size(); i++) {
-					if (standard.get(i).getSequence().equals(id)) {
-						this.standard.get(i).setSequence(standard.get(i).getSequence().replace(targetSequence, repSequence));
+				for (int i = 0; i < this.standard.size(); i++) {
+					if (this.standard.get(i).getSequence().equals(id)) {
+						this.standard.get(i).setSequence(this.standard.get(i).getSequence().replace(targetSequence, repSequence));
+						this.setSNPAlignment(this.standard);
+						this.setScore();
 						return;
 					}
 				}
 				System.out.println("Error - No genome was found with the input sequence");
 			}
-			this.setSNPAlignment(standard);
 		}
 	}
 	
@@ -174,6 +190,7 @@ public class Alignment {
 				this.setSNPAlignment(standard);
 			}
 		}
+		this.setScore();
 	}
 	
 	public void addGenome(String identifier, String sequence) {
@@ -184,6 +201,7 @@ public class Alignment {
 			Genome myGenome = new Genome(identifier, sequence);
 			standard.add(myGenome);
 			this.setSNPAlignment(standard);
+			this.setScore();
 		}
 	}
 	
@@ -207,6 +225,7 @@ public class Alignment {
 			System.out.println("Error - No genome was found with the input sequence");
 		}
 		this.setSNPAlignment(standard);
+		this.setScore();
 	}
 	
 	public static String toString(char[] a) {

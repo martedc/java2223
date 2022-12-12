@@ -27,7 +27,7 @@ public class Main {
 
 		// initialising starting alignments and repository
 		List<Alignment> startingRepository = new ArrayList<>();
-		startingRepository.add(startingAlignment);
+		startingRepository.add(null);
 		for (Employee e : employeeList.getEmployeeList()) {
 			if (e instanceof BioInformatician) {
 				Alignment myAlignment = new Alignment(startingAlignment);
@@ -36,7 +36,8 @@ public class Main {
 				((BioInformatician) e).setRepoID(startingRepository.size() - 1);
 			}
 		}
-		AlignmentRepo repo = new AlignmentRepo(startingRepository);
+		AlignmentRepo repo = new AlignmentRepo(startingAlignment,startingRepository);
+		repo.setOptimalAlignment(null);
 		
 		// testing bioinformatician changes
 		String testIdentifier = startingAlignment.getStandardAlignment().get(0).getIdentifier();
@@ -45,12 +46,12 @@ public class Main {
 	
 		// ((BioInformatician) employeeList.getEmployeeN(1)).replaceGenome(testIdentifier, ">testid", "AABTGTGCCAAG", repo);
 		
-		// ((BioInformatician) employeeList.getEmployeeN(1)).replaceSequence(testIdentifier, "TTT", "CCC", repo);
+		((BioInformatician) employeeList.getEmployeeN(1)).replaceSequence(testIdentifier, "TTT", "CCC", repo);
 		// ((BioInformatician) employeeList.getEmployeeN(2)).replaceSequence(testIdentifier, "C", "T", repo);
 		
 		
 		// startingAlignment.getStandardAlignment().get(0).printGenome();
-		// repo.getRepository().get(1).getStandardAlignment().get(0).printGenome();
+		repo.getRepository().get(1).getStandardAlignment().get(0).printGenome();
 		// repo.getRepository().get(2).getStandardAlignment().get(0).printGenome();
 		
 		scan.close();

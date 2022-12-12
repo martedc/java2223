@@ -7,13 +7,15 @@ public abstract class Employee {
 	private String firstName;
 	private String lastName;
 	private int experience;
+	private int repoID;
 
 	// constructor method: function, first name, last name and years of experience
-	public Employee(String function, String firstName, String lastName, int experience) {
+	public Employee(String function, String firstName, String lastName, int experience, int repoID) {
 		this.setFunction(function);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setExperience(experience);
+		this.setRepoID(repoID);
 	}
 
 	// getters and setters for variables
@@ -55,6 +57,14 @@ public abstract class Employee {
 
 	public void setExperience(int experience) {
 		this.experience = experience;
+	}
+
+	public int getRepoID() {
+		return repoID;
+	}
+
+	public void setRepoID(int repoID) {
+		this.repoID = repoID;
 	}
 
 }

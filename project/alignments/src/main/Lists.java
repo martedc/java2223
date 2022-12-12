@@ -24,13 +24,13 @@ public class Lists {
 
 				switch (function) {
 				case "TeamLead":
-					myEmployee = new TeamLead(scan.next(), scan.next(), Integer.parseInt(scan.next()));
+					myEmployee = new TeamLead(scan.next(), scan.next(), Integer.parseInt(scan.next()), 0);
 					break;
 				case "Bioinformatician":
 					myEmployee = new BioInformatician(scan.next(), scan.next(), Integer.parseInt(scan.next()), null, 0);
 					break;
 				case "TechnicalSupport":
-					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()));
+					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()), -1);
 					break;
 				default:
 					myEmployee = null;

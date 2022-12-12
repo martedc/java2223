@@ -5,13 +5,11 @@ import bio.*;
 public class BioInformatician extends Employee {
 	
 	private Alignment alignment;
-	private int repoID;
 
 	// constructor method, Bioinformatician is a subclass of Employee
 	public BioInformatician(String firstName, String lastName, int experience, Alignment alignment, int repoID) {
-		super("Bioinformatician",firstName,lastName,experience);
+		super("Bioinformatician",firstName,lastName,experience, repoID);
 		this.setAlignment(alignment);
-		this.setRepoID(repoID);
 	}
 
 	public Alignment getAlignment() {
@@ -22,40 +20,35 @@ public class BioInformatician extends Employee {
 		this.alignment = alignment;
 	}
 	
-	public int getRepoID() {
-		return repoID;
-	}
-	
-	public void setRepoID(int id) {
-		this.repoID = id;
-	}
 	
 	public void findSequence(boolean snip, String s) {
+		System.out.println("Bioinformatician " + this.getFirstName() + " searching for genomes with " + s + ". Genomes found:" );
 		alignment.findSequence(snip, s);
 	}
 	
 	public void replaceGenome(String id, String repIdentifier, String repSequence, AlignmentRepo repo) {
+		System.out.println("Bioinformatician " + this.getFirstName() + " replacing genome.");
 		alignment.replaceGenome(id, repIdentifier, repSequence);
-		repo.changeAlignment(repoID, alignment);
+		repo.changeAlignment(this.getRepoID(), alignment);
 	}
 	
 	public void replaceSequence(String id, String targetSequence, String repSequence, AlignmentRepo repo) {
-		alignment.replaceSequence(id, targetSequence, repSequence);
-		repo.changeAlignment(repoID, alignment);
+		this.alignment.replaceSequence(id, targetSequence, repSequence);
+		repo.changeAlignment(this.getRepoID(), this.getAlignment());
 	}
 	
 	public void replaceSequence(String targetSequence, String repSequence, AlignmentRepo repo) {
 		alignment.replaceSequence(targetSequence, repSequence);
-		repo.changeAlignment(repoID, alignment);
+		repo.changeAlignment(this.getRepoID(), alignment);
 	}
 	
 	public void addGenome(String identifier, String sequence, AlignmentRepo repo) {
 		alignment.addGenome(identifier, sequence);
-		repo.changeAlignment(repoID, alignment);
+		repo.changeAlignment(this.getRepoID(), alignment);
 	}
 	
 	public void removeGenome(String id, AlignmentRepo repo) {
 		alignment.removeGenome(id);
-		repo.changeAlignment(repoID, alignment);
+		repo.changeAlignment(this.getRepoID(), alignment);
 	}
 }
