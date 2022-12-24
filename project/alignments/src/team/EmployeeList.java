@@ -80,7 +80,7 @@ public class EmployeeList {
 	 * @param i index of the TechnicalSupport
 	 * @return TechnicalSupport at index i
 	 */
-	public TechnicalSupport getTechSupportList(int i) {
+	public TechnicalSupport getTechSupport(int i) {
 		List<TechnicalSupport> tsList = new ArrayList<>();
 		
 		for (Employee e : this.getEmployeeList()) {

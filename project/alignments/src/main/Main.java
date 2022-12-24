@@ -67,10 +67,10 @@ public class Main {
 		employeeList.getBioinformatician(1).replaceSequence("ACATTT", "ACGTCT", repo);
 		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(1), repo);
 		employeeList.getTeamLead(0).setAlignment(employeeList.getBioinformatician(2), repo);
-		employeeList.getTechSupportList(0).setBackup(repo);
+		employeeList.getTechSupport(0).setBackup(repo);
 		employeeList.getTeamLead(0).writeReportToFile(repo);
 		employeeList.getBioinformatician(2).replaceSequence(">2002.F1.AR.02.ARE933", "AGGAGAGCC", "AGGGGGGCC", repo);
-		employeeList.getTechSupportList(0).restoreRepository(repo);
+		employeeList.getTechSupport(0).restoreRepository(repo);
 		employeeList.getBioinformatician(2).writeReportToFile();
 		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(2), repo);
 		employeeList.getBioinformatician(0).removeGenome(">1997.D.KE.97.ML415", repo);
