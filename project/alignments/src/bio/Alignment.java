@@ -3,20 +3,34 @@ package bio;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * The Alignment class keeps track of two lists of Genomes. The standard alignment and the SNiP alignment. This class contains methods allowing Bioinformaticians to make changes to their personal alignments.
+ * @author Marten De Cock r0800075
+ *
+ */
 public class Alignment {
 
-	// variables for an alignment (standard alignment, SNiP alignment and corresponding alignment score)
 	private List<Genome> standard;
 	private List<Genome> snp;
 	private int score;
 
-	// constructor method
+	
+	/**
+	 * Constructor method for the Alignment class. 
+	 * @param std standard alignment
+	 * @param snp SNiP alignment 
+	 * @param score alignment score 
+	 */
 	public Alignment(List<Genome> std, List<Genome> snp, int score) {
 		this.setStandardAlignment(std);
 		this.setSNPAlignment(snp);
 		this.setScore();
 	}
 	
+	/**
+	 * Copy constructor of the Alignment class. Used to ensure different id's in the memory during execution.
+	 * @param toClone alignment to clone
+	 */
 	public Alignment(Alignment toClone) {
 		List<Genome> copyStandardList = new ArrayList<>();
 		List<Genome> copySnpList = new ArrayList<>();
@@ -29,30 +43,36 @@ public class Alignment {
 			copyStandardList.add(myGenome1);
 			copySnpList.add(myGenome2);
 		}
-		
 		this.standard = copyStandardList;
 		this.setSNPAlignment(copySnpList);
 		this.score = toClone.getScore();
+		
 	}
 
-	// getter and setter methods
+	/**
+	 * @return standard alignment
+	 */
 	public List<Genome> getStandardAlignment() {
 		return standard;
 	}
 
+	/**
+	 * @param std standard alignment
+	 */
 	public void setStandardAlignment(List<Genome> std) {
 		this.standard = std;
 	}
 
+	/**
+	 * @return SNiP alignment
+	 */
 	public List<Genome> getSNPAlignment() {
 		return snp;
 	}
 
-	/* SNiP setter method: determines the corresponding SNiP alignment 
-	 * input is the a list of genomes, to get the corresponding SNiP alignment a reference
-	 * sequence is taken (first genome) and turned into an array of Characters and
-	 * compared line by line with all the following genomes, if the characters
-	 * correspond they stay unchanged, otherwise they get replaced with a '.'
+	/**
+	 * Sets the SNiP alignment, uses a reference sequence (first genome) and replaces all non-corresponding genomes with a '.' resulting in a new list of Genomes.
+	 * @param alignment alignment to construct SNiP alignment from (has to be in the standard form)
 	 */
 	public void setSNPAlignment(List<Genome> alignment) {
 		char[] refSequence = alignment.get(0).getSequence().toCharArray();
@@ -79,14 +99,19 @@ public class Alignment {
 			myAlignment.get(i).setSequence(toString(newSequence));
 		}
 		this.snp = myAlignment;
+		
 	}
 
+	/**
+	 * @return alignment score
+	 */
 	public int getScore() {
 		return score;
 	}
 
-	// Alignment score setter method: computes score
-	// works by comparing a reference sequence (first genome) with all following genomes, if a character is not the same 1 gets added to the score
+	/**
+	 * Calculates alignment score. Compares the reference sequence (first genome) and adds 1 when a nucleotide doesn't correspond. 
+	 */
 	public void setScore() {
 		char[] refSequence = this.standard.get(0).getSequence().toCharArray();
 		char[] newSequence;
@@ -105,15 +130,22 @@ public class Alignment {
 			}
 		}
 		this.score = s;
+		
 	}
 	
+	/**
+	 * Finds genomes with a given sequence of nucleotides. 
+	 * Prints the results.
+	 * @param snip true to search SNiP alignment, false to search SNP alignment
+	 * @param s sequence of nucleotides
+	 */
 	public void findSequence(boolean snip, String s) {
 		
 		if (snip == true) {
 			for (int i = 0; i < snp.size(); i++) {
 				if (snp.get(i).getSequence().indexOf(s) != -1) {
 					snp.get(i).printGenome();
-				}
+				} 
 			}
 		} else if (snip == false) {
 			for (int i = 0; i < standard.size(); i++) {
@@ -124,8 +156,16 @@ public class Alignment {
 		} else {
 			System.out.println("Error - Please enter true/false correctly");
 		}
+		System.out.println('\n');
+		
 	}
 	
+	/**
+	 * Replaces a genome in the alignment in place of the genome with the given identifier.
+	 * @param id identifier of the genome 
+	 * @param repIdentifier replacement identifier
+	 * @param repSequence replacement sequence
+	 */
 	public void replaceGenome(String id, String repIdentifier, String repSequence) {
 	
 		if (id.charAt(0) == '>') { 
@@ -149,8 +189,15 @@ public class Alignment {
 		}
 		this.setSNPAlignment(standard);
 		this.setScore();
+		
 	}
 	
+	/**
+	 * Replaces a given sequence of nucleotides with a new sequence in a genome.
+	 * @param id identifier of the genome 
+	 * @param targetSequence target sequence of nucleotides
+	 * @param repSequence replacement sequence of nucleotides
+	 */
 	public void replaceSequence(String id, String targetSequence, String repSequence) {
 		
 		if (targetSequence.length() != repSequence.length()) {
@@ -178,8 +225,14 @@ public class Alignment {
 				System.out.println("Error - No genome was found with the input sequence");
 			}
 		}
+		
 	}
 	
+	/**
+	 * Replaces a given sequence of nucleotides with a new sequence in an alignment.
+	 * @param targetSequence target sequence of nucleotides
+	 * @param repSequence replacement sequence of nucleotides
+	 */
 	public void replaceSequence(String targetSequence, String repSequence) {
 		
 		if (targetSequence.length() != repSequence.length()) {
@@ -193,6 +246,11 @@ public class Alignment {
 		this.setScore();
 	}
 	
+	/**
+	 * Adds a genome at the end of the alignment repository.
+	 * @param identifier identifier of the new genome
+	 * @param sequence sequence of the new genome
+	 */
 	public void addGenome(String identifier, String sequence) {
 		
 		if (identifier.charAt(0) != '>') {
@@ -205,6 +263,11 @@ public class Alignment {
 		}
 	}
 	
+	
+	/**
+	 * Removes a genome based on the given identifier.
+	 * @param id
+	 */
 	public void removeGenome(String id) {
 		
 		if (id.charAt(0) == '>') { 
@@ -226,11 +289,17 @@ public class Alignment {
 		}
 		this.setSNPAlignment(standard);
 		this.setScore();
+		
 	}
 	
+	/**
+	 * Converts an array of characters into a string.
+	 * @param a array of characters
+	 * @return joined string
+	 */
 	public static String toString(char[] a) {
 		String string = new String(a);
 		return string;
 	}
-
+	
 }

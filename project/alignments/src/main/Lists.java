@@ -8,8 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Important class that contains methods to initialize the employees and alignments from text and fasta files.
+ * @author marte
+ *
+ */
 public class Lists {
 
+	/**
+	 * Reads variables from text file to construct a list of employees.
+	 * @param fileName name of the input file (with extension)
+	 * @return list of employees
+	 */
 	public List<Employee> createEmployeeList(String fileName) {
 		List<Employee> employeeList = new ArrayList<>();
 
@@ -24,13 +34,13 @@ public class Lists {
 
 				switch (function) {
 				case "TeamLead":
-					myEmployee = new TeamLead(scan.next(), scan.next(), Integer.parseInt(scan.next()), 0);
+					myEmployee = new TeamLead(scan.next(), scan.next(), Integer.parseInt(scan.next()), -1);
 					break;
 				case "Bioinformatician":
 					myEmployee = new BioInformatician(scan.next(), scan.next(), Integer.parseInt(scan.next()), null, 0);
 					break;
 				case "TechnicalSupport":
-					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()), -1);
+					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()), null , -2);
 					break;
 				default:
 					myEmployee = null;
@@ -50,6 +60,11 @@ public class Lists {
 
 	}
 
+	/**
+	 * Reads identifier and sequences of genomes in a .fasta file to construct an alignment.
+	 * @param fileName name of the input file (with extension)
+	 * @return list of genomes
+	 */
 	public List<Genome> createGenomeList(String fileName) {
 		List<Genome> genomeList = new ArrayList<>();
 
