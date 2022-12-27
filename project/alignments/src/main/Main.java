@@ -44,7 +44,7 @@ public class Main {
 		}
 		
 		// Create the repository with the startingAlignment and startingAlignment variables. 
-		// Technical support employees also set this initial repository as backup.
+		// Technical support employees also set this initial repository as backup. (so we have something to return to)
 		AlignmentRepo repo = new AlignmentRepo(startingAlignment,startingRepository); 
 		for (Employee e : employeeList.getEmployeeList()) {
 			if (e instanceof TechnicalSupport) {
@@ -60,20 +60,30 @@ public class Main {
 		 * All following code are the employees executing some of their methods to make changes to alignments, write to files, etc.
 		 */
 		
+//		employeeList.printEmployees();
+//		employeeList.getBioinformatician(0).findSequence(false, "ACACAGAGCTAAGGCAGTAGCAGATTTCAAAA");
+//		employeeList.getBioinformatician(0).replaceSequence(">1997.D.KE.97.ML415", "ACACAGAGCTAAGGCAGTAGCAGATTTCAAAA", "ACACAGAACTAGGGCAGTAACAGATTCCAAAA", repo);
+//		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(0), repo);
+//		employeeList.getBioinformatician(1).replaceSequence("ACATTT", "ACGTCT", repo);
+//		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(1), repo);
+//		employeeList.getTeamLead(0).setAlignment(employeeList.getBioinformatician(2), repo);
+//		employeeList.getTechSupport(0).setBackup(repo);
+//		employeeList.getTeamLead(0).writeReportToFile(repo);
+//		employeeList.getBioinformatician(2).replaceSequence(">2002.F1.AR.02.ARE933", "AGGAGAGCC", "AGGGGGGCC", repo);
+//		employeeList.getTechSupport(0).restoreRepository(repo);
+//		employeeList.getBioinformatician(2).writeReportToFile();
+//		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(2), repo);
+//		employeeList.getBioinformatician(0).removeGenome(">1997.D.KE.97.ML415", repo);
+		
 		employeeList.printEmployees();
-		employeeList.getBioinformatician(0).findSequence(false, "ACACAGAGCTAAGGCAGTAGCAGATTTCAAAA");
-		employeeList.getBioinformatician(0).replaceSequence(">1997.D.KE.97.ML415", "ACACAGAGCTAAGGCAGTAGCAGATTTCAAAA", "ACACAGAACTAGGGCAGTAACAGATTCCAAAA", repo);
-		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(0), repo);
-		employeeList.getBioinformatician(1).replaceSequence("ACATTT", "ACGTCT", repo);
-		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(1), repo);
-		employeeList.getTeamLead(0).setAlignment(employeeList.getBioinformatician(2), repo);
-		employeeList.getTechSupport(0).setBackup(repo);
-		employeeList.getTeamLead(0).writeReportToFile(repo);
-		employeeList.getBioinformatician(2).replaceSequence(">2002.F1.AR.02.ARE933", "AGGAGAGCC", "AGGGGGGCC", repo);
-		employeeList.getTechSupport(0).restoreRepository(repo);
-		employeeList.getBioinformatician(2).writeReportToFile();
+		employeeList.getBioinformatician(1).replaceSequence("TGTCC", "TTTCC", repo);
+		employeeList.getBioinformatician(2).replaceSequence(">2001.F1.BR.01.01BR087", "AAGTTACCG", "AAATTAAGG", repo);
 		employeeList.getTeamLead(0).setOptimalAlignment(employeeList.getBioinformatician(2), repo);
-		employeeList.getBioinformatician(0).removeGenome(">1997.D.KE.97.ML415", repo);
+		employeeList.getTeamLead(0).setAlignment(employeeList.getBioinformatician(1), repo);
+		employeeList.getTechSupport(0).setBackup(repo);
+		employeeList.getBioinformatician(1).replaceSequence("ACGC","TATC", repo);
+		employeeList.getTechSupport(0).restoreRepository(repo, employeeList);
+		System.out.println(employeeList.getBioinformatician(1).getAlignment().getScore());
 		
 	}
 

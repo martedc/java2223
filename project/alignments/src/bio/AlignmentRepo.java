@@ -2,6 +2,7 @@ package bio;
 
 import java.util.List;
 import java.util.ArrayList;
+import team.*;
 
 /**
  * Repository class containing an optimalAlignment and bioinformaticians' personal alignments.
@@ -120,6 +121,28 @@ public class AlignmentRepo {
 			this.optimalAlignment = null;
 			for (Alignment a: alignmentList) {
 				alignmentList.set(alignmentList.indexOf(a), null);
+			}
+		} else {
+			System.out.println("Error - This employee has insufficient permissions to access this method");
+		}
+		
+	}
+	
+	public void restoreRepository(int id, AlignmentRepo backup, EmployeeList el) {
+		this.optimalAlignment = backup.getOptimalAlignment();
+		
+		if (id == -2) {
+			for (int i = 0; i < alignmentList.size() ; i++) {
+				if (alignmentList.get(i) == null) {
+					continue;
+				} else {
+					alignmentList.set(i, backup.getRepository().get(i));
+					Employee myEmployee = el.getEmployeeList().get(i);
+					if (myEmployee instanceof BioInformatician) {
+						BioInformatician bi = (BioInformatician)myEmployee;
+						bi.setAlignment(backup.getRepository().get(i));
+					}
+				}
 			}
 		} else {
 			System.out.println("Error - This employee has insufficient permissions to access this method");

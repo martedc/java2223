@@ -40,7 +40,7 @@ public class Lists {
 					myEmployee = new BioInformatician(scan.next(), scan.next(), Integer.parseInt(scan.next()), null, 0);
 					break;
 				case "TechnicalSupport":
-					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()), null , -2);
+					myEmployee = new TechnicalSupport(scan.next(), scan.next(), Integer.parseInt(scan.next()), -2);
 					break;
 				default:
 					myEmployee = null;
