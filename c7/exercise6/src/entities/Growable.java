@@ -1,7 +1,7 @@
-package main;
+package entities;
 
 public interface Growable {
 
 	void grow();
-	void isFullyGrown();
+	boolean isFullyGrown();
 }

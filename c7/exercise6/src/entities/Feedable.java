@@ -1,7 +1,7 @@
-package main;
+package entities;
 
 public interface Feedable {
 
 	void feed();
-	void isHungry();
+	boolean isHungry();
 }
