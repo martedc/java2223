@@ -1,0 +1,5 @@
+Marie,5,2,4
+Tim,0,10,2
+Hakim,9,2,2
+Jordan,4,4,4
+Tony,2,3,4
